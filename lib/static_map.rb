@@ -25,7 +25,7 @@ module StaticMap
     # path String     - path to write file to when #save is called
     # alt String      - alt text if using image tag
     # title String    - title text if using image tag
-    attr_accessor :center, :zoom, :size, :sensor, :markers, :maptype, :path, :alt, :title
+    attr_accessor :center, :zoom, :size, :sensor, :markers, :maptype, :path, :alt, :title, :key
 
     def initialize(options={})
       @markers  = options[:markers] || []
@@ -37,6 +37,7 @@ module StaticMap
       @path     = options[:path]    || nil
       @alt      = options[:alt]     || nil
       @title    = options[:title]   || nil
+      @key    = options[:key]   || nil
     end
 
     def save
@@ -54,7 +55,7 @@ module StaticMap
     end
 
     def params
-      x = { size: size, center: center, zoom: zoom, sensor: sensor, maptype: maptype }.reject { |k,v| v.nil? }.map do |k,v|
+      x = { size: size, center: center, zoom: zoom, sensor: sensor, maptype: maptype, key: key}.reject { |k,v| v.nil? }.map do |k,v|
         "#{k}=#{CGI.escape(v.to_s)}"
       end.join("&")
 
